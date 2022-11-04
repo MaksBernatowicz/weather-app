@@ -80,7 +80,23 @@ const App = () => {
       break;
   }
 
-  return <div className="text-6xl">{icon}</div>;
+  return (
+    <div className="w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center">
+      {/* form */}
+      <form>form</form>
+      {/* card */}
+      <div>
+        <div>
+          {/* card top */}
+          <div>card top</div>
+          {/* card body */}
+          <div>card body</div>
+          {/* card bottom */}
+          <div>card bottom</div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default App;
