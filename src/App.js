@@ -80,7 +80,7 @@ const App = () => {
       break;
   }
 
-  return <div>react app</div>;
+  return <div className="text-6xl">{icon}</div>;
 };
 
 export default App;
