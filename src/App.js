@@ -31,6 +31,11 @@ const APIkey = "09032caa0112efdd24deab7804d6fb5a";
 const App = () => {
   const [data, setData] = useState(null); // state for data
   const [location, setLocation] = useState("Krakow"); // state for location
+  const [inputValue, setInputValue] = useState(""); // state for typing name of city or country into input
+
+  const handleInput = (e) => {
+    setInputValue(e.target.value);
+  };
 
   // fetch the data
   useEffect(() => {
@@ -54,7 +59,6 @@ const App = () => {
 
   // set the icon according to the weather
   let icon;
-  console.log(data.weather[0].main);
 
   switch (data.weather[0].main) {
     case "Clouds":
@@ -92,12 +96,13 @@ const App = () => {
       >
         <div className="h-full relative flex items-center justify-between p-2">
           <input
+            onChange={(e) => handleInput(e)}
             className="flex-1 bg-transparent outline-none placeholder:text-white text-white text-[15px] font-light pl-6 h-full"
             type="text"
             placeholder="Search by city or country"
           />
           <button className="bg-[#1ab8ed] hover:bg-[#15abdd] w-20 h-12 rounded-full flex justify-center items-center transition">
-            <IoMdSearch />
+            <IoMdSearch className="text-2xl text-white" />
           </button>
         </div>
       </form>
