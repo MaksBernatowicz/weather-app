@@ -34,6 +34,7 @@ const App = () => {
   const [inputValue, setInputValue] = useState(""); // state for typing name of city or country into input
   const [animate, setAnimate] = useState(false); // state for shake animation if input for search is empty
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleInput = (e) => {
     setInputValue(e.target.value);
@@ -73,15 +74,33 @@ const App = () => {
 
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${APIkey}`;
 
-    axios.get(url).then((res) => {
-      // set the data after 1500 ms
-      setTimeout(() => {
-        setData(res.data);
-        // set loading to false
+    axios
+      .get(url)
+      .then((res) => {
+        // set the data after 1500 ms
+        setTimeout(() => {
+          setData(res.data);
+          // set loading to false
+          setLoading(false);
+        }, 1500);
+      })
+      .catch((err) => {
         setLoading(false);
-      }, 1500);
-    });
+        setErrorMsg(err);
+      });
   }, [location]);
+
+  // error message
+  useEffect(
+    () => {
+      const timer = setTimeout(() => {
+        setErrorMsg("");
+      }, 2000);
+      // clear timer
+      return () => clearTimeout(timer);
+    },
+    { errorMsg }
+  );
 
   // if data is false show the loader-spinner
   if (!data) {
@@ -126,6 +145,9 @@ const App = () => {
 
   return (
     <div className="w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0">
+      {errorMsg && (
+        <div className="w-full max-w-[90vw] lg:max-w-[450px] bg-[#ff208c] text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md">{`${errorMsg.response.data.message}`}</div>
+      )}
       {/* form */}
       <form
         className={`${
