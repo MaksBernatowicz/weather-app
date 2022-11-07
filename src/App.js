@@ -91,16 +91,13 @@ const App = () => {
   }, [location]);
 
   // error message
-  useEffect(
-    () => {
-      const timer = setTimeout(() => {
-        setErrorMsg("");
-      }, 2000);
-      // clear timer
-      return () => clearTimeout(timer);
-    },
-    { errorMsg }
-  );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+    }, 2000);
+    // clear timer
+    return () => clearTimeout(timer);
+  }, [errorMsg]);
 
   // if data is false show the loader-spinner
   if (!data) {
@@ -145,13 +142,10 @@ const App = () => {
 
   return (
     <div className="w-full h-screen bg-gradientBg bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center px-4 lg:px-0">
-      {errorMsg && (
-        <div className="w-full max-w-[90vw] lg:max-w-[450px] bg-[#ff208c] text-white absolute top-2 lg:top-10 p-4 capitalize rounded-md">{`${errorMsg.response.data.message}`}</div>
-      )}
       {/* form */}
       <form
         className={`${
-          animate ? "animate-shake" : "animate-none"
+          errorMsg || animate ? "animate-shake bg-pink-700" : "animate-none"
         } h-16 bg-black/30 w-full max-w-[450px] 
       rounded-full backdrop-blur-[32px] mb-8`}
       >
@@ -160,7 +154,11 @@ const App = () => {
             onChange={(e) => handleInput(e)}
             className="flex-1 bg-transparent outline-none placeholder:text-white text-white text-[15px] font-light pl-6 h-full"
             type="text"
-            placeholder="Search by city or country"
+            placeholder={
+              errorMsg
+                ? errorMsg.response.data.message
+                : `Search by city or country`
+            }
           />
           <button
             onClick={(e) => handleSubmit(e)}
@@ -171,7 +169,7 @@ const App = () => {
         </div>
       </form>
       {/* card */}
-      <div className="w-full max-w-[450px] bg-black/20 min-h-[584px] text-white backdrop-blur-[32px] rounded-[32px] py-12 px-6">
+      <div className="w-full max-w-[450px] bg-black/30 min-h-[584px] text-white backdrop-blur-[32px] rounded-[32px] py-12 px-6">
         {loading ? (
           <div className="w-full h-full flex justify-center items-center">
             <ImSpinner8 className="text-white text-5xl animate-spin" />
