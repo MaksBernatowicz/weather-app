@@ -96,7 +96,7 @@ const App = () => {
             type="text"
             placeholder="Search by city or country"
           />
-          <button>
+          <button className="bg-[#1ab8ed] hover:bg-[#15abdd] w-20 h-12 rounded-full flex justify-center items-center transition">
             <IoMdSearch />
           </button>
         </div>
