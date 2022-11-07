@@ -37,6 +37,12 @@ const App = () => {
     setInputValue(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    console.log(inputValue);
+    // prevent defaults
+    e.preventDefault();
+  };
+
   // fetch the data
   useEffect(() => {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${APIkey}`;
@@ -101,7 +107,10 @@ const App = () => {
             type="text"
             placeholder="Search by city or country"
           />
-          <button className="bg-[#1ab8ed] hover:bg-[#15abdd] w-20 h-12 rounded-full flex justify-center items-center transition">
+          <button
+            onClick={(e) => handleSubmit(e)}
+            className="bg-[#1ab8ed] hover:bg-[#15abdd] w-20 h-12 rounded-full flex justify-center items-center transition"
+          >
             <IoMdSearch className="text-2xl text-white" />
           </button>
         </div>
